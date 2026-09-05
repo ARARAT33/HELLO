@@ -1,0 +1,10 @@
+{
+  "name": "HELLO Infinite Universe",
+  "short_name": "HELLO ∞",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#050816",
+  "theme_color": "#070b18",
+  "description": "Deterministic, runtime-generated procedural universes.",
+  "icons": []
+}
