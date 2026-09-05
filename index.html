@@ -1,7 +1,22 @@
 <!doctype html>
-<html lang="hy"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>HELLO Infinite Generator</title><style>
-body{margin:0;font-family:system-ui;background:#0b1020;color:white}header{padding:30px;text-align:center;background:linear-gradient(135deg,#2563eb,#9333ea)}main{max-width:1000px;margin:auto;padding:25px}.box{background:#111827;padding:20px;border-radius:20px;margin:15px 0}input,select,button{padding:12px;border-radius:10px;border:0;margin:5px}button{cursor:pointer;background:#22c55e;color:white;font-weight:bold}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}.card{background:#1f2937;padding:20px;border-radius:15px;min-height:100px}</style></head>
-<body><header><h1>∞ HELLO Universe Generator</h1><p>Անվերջ ալգորիթմական եզակի էջեր</p></header><main><div class="box"><h2>Ստեղծիր նոր էջ</h2><select id="topic"><option>Գիտություն</option><option>Տիեզերք</option><option>AI</option><option>Ֆանտազիա</option><option>Ծրագրավորում</option><option>Պատմություն</option></select><input id="seed" placeholder="0 - անվերջ թիվ կամ նշան"><button onclick="generate()">Generate</button></div><div id="page" class="box"></div></main><script>
-function hash(s){let h=2166136261;for(let c of s)h=(h^c.charCodeAt(0))*16777619;return Math.abs(h)}
-function generate(){let t=document.getElementById('topic').value,s=document.getElementById('seed').value||Math.random();let h=hash(t+s),words=['Quantum','Nova','AWE','Matrix','Future','Origin','Infinity','Echo'];let title=words[h%words.length]+' '+(h%1000000);let alg=[];for(let i=0;i<100;i++)alg.push((h*(i+1)*31%999999));document.getElementById('page').innerHTML=`<h2>${title}</h2><p>Թեմա: ${t}</p><p>Seed: ${s}</p><div class="grid">${alg.slice(0,12).map((x,i)=>`<div class="card"><b>Algorithm ${i+1}</b><br>${x}</div>`).join('')}</div><p>Այս էջը ստեղծվել է deterministic generator-ով և նույն seed-ը տալիս է նույն արդյունքը։</p>`}
-generate();</script></body></html>
+<html lang="hy">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HELLO Infinite Universe v2</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:system-ui;background:#050816;color:#fff}header{padding:35px;text-align:center;background:linear-gradient(135deg,#2563eb,#9333ea)}main{max-width:1200px;margin:auto;padding:20px}.box{background:#111827cc;border:1px solid #334155;border-radius:24px;padding:20px;margin:15px 0}input,select,button{padding:14px;border-radius:12px;border:0;margin:5px}button{background:#22c55e;color:white;font-weight:700;cursor:pointer}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px}.card{background:#1e293b;padding:18px;border-radius:18px;min-height:130px}.visual{height:220px;border-radius:20px;background:radial-gradient(circle at 30% 30%,#60a5fa,transparent),linear-gradient(120deg,#111827,#581c87);animation:a 8s infinite alternate}@keyframes a{from{filter:hue-rotate(0)}to{filter:hue-rotate(180deg)}}
+</style>
+</head>
+<body>
+<header><h1>∞ HELLO Infinite Universe</h1><p>Deterministic procedural worlds generator</p></header>
+<main>
+<div class="box"><h2>Ստեղծիր աշխարհ</h2><select id="topic"><option>AI</option><option>Տիեզերք</option><option>Գիտություն</option><option>Ֆանտազիա</option><option>Ծրագրավորում</option><option>Պատմություն</option></select><input id="seed" placeholder="ցանկացած լեզու, թիվ կամ նշան"><button onclick="generate()">GENERATE</button></div>
+<div id="page" class="box"></div>
+</main>
+<script>
+function hash64(str){let h=BigInt('1469598103934665603');for(const c of str){h^=BigInt(c.codePointAt(0));h*=BigInt('1099511628211');h&=BigInt('18446744073709551615')}return h}
+function rnd(h,n){h=(h*BigInt(6364136223846793005)+BigInt(1442695040888963407))&BigInt('18446744073709551615');return [h,Number(h%BigInt(n))]}
+function generate(){let topic=document.getElementById('topic').value;let seed=document.getElementById('seed').value||'∞';let key=topic+'::'+seed;let h=hash64(key);let names=['Nova','Quantum','AWE','Genesis','Infinity','Cosmos','Matrix','Echo'];let colors=['Blue','Red','Gold','Violet','Crystal','Dark'];let data=[];for(let i=0;i<120;i++){let r=rnd(h+i,999999999);data.push(r[1])}let id=h.toString(16).toUpperCase();document.getElementById('page').innerHTML=`<div class="visual"></div><h2>${names[Number(h%8n)]} ${colors[Number(h%6n)]}</h2><p>Universe ID: ${id}</p><p>Topic: ${topic}</p><p>Seed: ${seed}</p><div class="grid">${data.slice(0,20).map((x,i)=>`<div class="card"><b>Algorithm ${i+1}</b><br>Value: ${x}<br>Hash fragment: ${id.slice(i%10,i%10+8)}</div>`).join('')}</div><button onclick="navigator.clipboard.writeText(location.href+'#'+id)">Share Universe</button>`}
+generate();
+</script>
+</body></html>
